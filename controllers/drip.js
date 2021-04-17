@@ -1,46 +1,40 @@
-const drips = [
-    {
-        dripNumber: 1,
-        startTime: "",
-        status: false,
-        waterLevel: 70,
-    },
-    {
-        dripNumber: 2,
-        startTime: "",
-        status: false,
-        waterLevel: 70,
-    },
-    {
-        dripNumber: 3,
-        startTime: "",
-        status: false,
-        waterLevel: 70,
-    },
-    {
-        dripNumber: 4,
-        startTime: "",
-        status: false,
-        waterLevel: 70,
-    },
-];
+class Drip {
+    static #drips = {};
 
-const getDripStatus = () => {
-    return drips;
-};
+    constructor() {
+        const newIndex = Object.keys(Drip.#drips).length + 1;
+        Drip.#drips["_" + newIndex] = {
+            dripNumber: newIndex,
+            startTime: "",
+            status: false,
+            waterLevel: 60,
+        };
+        this.dripNumber = newIndex;
+        this.key = ["_" + newIndex];
+    }
 
-const changeDripStatus = (dripNumber, newStatus) => {
-    const idx = drips.findIndex((drp) => dripNumber == "_" + drp.dripNumber);
+    static getDrips() {
+        return Drip.#drips;
+    }
 
-    drips[idx].status = newStatus;
-    drips[idx].startTime = newStatus ? new Date().toISOString() : "";
-};
+    static getDripStatus() {
+        const status = {};
+        for (const key in Drip.#drips) {
+            status[key] = Drip.#drips[key].status;
+        }
+        return status;
+    }
 
-const getCurrentDripStatus = () => {
-    return getDripStatus().reduce(
-        (acc, drip) => ({ ...acc, ["_" + drip.dripNumber]: drip.status }),
-        {}
-    );
-};
+    getStatus() {
+        return Drip.#drips["_" + this.dripNumber].status;
+    }
 
-module.exports = { getDripStatus, changeDripStatus, getCurrentDripStatus };
+    changeDripStatus(newStatus, _key) {
+        const key = _key || "_" + this.dripNumber;
+
+        Drip.#drips[key].status = newStatus;
+        Drip.#drips[key].startTime = newStatus ? new Date().toISOString() : "";
+    }
+}
+
+module.exports = Drip;

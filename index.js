@@ -5,6 +5,7 @@ const { initConfiguration } = require("./config/init");
 const { setHardwareConfig, getHardwareConfig } = require("./firebase/init");
 const { updateBasicParameters } = require("./schedulers");
 const { rootListner } = require("./listners");
+const Drip = require("./controllers/drip");
 
 async function boot() {
     const { hardwareId } = await initConfiguration();
@@ -30,8 +31,23 @@ async function boot() {
         return process.exit(1);
     }
 
-    global.hardwareConfig = hardwareConfig;
     const DB_UPDATE_INTERVAL = process.env.DB_UPDATE_INTERVAL || 15000;
+
+    const drip1 = new Drip();
+    const drip2 = new Drip();
+    const drip3 = new Drip();
+    const drip4 = new Drip();
+
+    global.locals = {
+        userId: hardwareConfig.userId,
+        hardwareConfig: hardwareConfig,
+        dripInstances: {
+            [drip1.key]: drip1,
+            [drip2.key]: drip2,
+            [drip3.key]: drip3,
+            [drip4.key]: drip4,
+        },
+    };
 
     rootListner();
     updateBasicParameters();

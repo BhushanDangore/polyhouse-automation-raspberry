@@ -1,11 +1,8 @@
 const { database } = require("../firebase");
-const {
-    changeDripStatus,
-    getCurrentDripStatus,
-} = require("../controllers/drip");
+const Drip = require("../controllers/drip");
 
 const rootListner = () => {
-    const userId = hardwareConfig.userId;
+    const { userId } = locals;
     database.ref(`users/${userId}/updatedHumidity`).on("value", (_snap) => {
         const snap = _snap?.val();
     });
@@ -16,10 +13,10 @@ const rootListner = () => {
 
     database.ref(`users/${userId}/requestedDripStatus`).on("value", (_snap) => {
         const snap = _snap?.val() || {};
-        const currStatus = getCurrentDripStatus();
+        const currStatus = Drip.getDripStatus();
         for (const key in snap) {
             if (snap[key] != currStatus[key]) {
-                changeDripStatus(key, snap[key]);
+                global.locals.dripInstances[key].changeDripStatus(snap[key]);
             }
         }
     });

@@ -1,18 +1,30 @@
 {
-  "name": "respberry",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "debug": "^4.3.1",
-    "dotenv": "^8.2.0",
-    "firebase": "^8.4.1",
-    "jsonfile": "^6.1.0",
-    "uuid": "^8.3.2"
-  }
+    "name": "respberry",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node .",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "pretty-quick": "pretty-quick"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "debug": "^4.3.1",
+        "dotenv": "^8.2.0",
+        "firebase": "^8.4.1",
+        "jsonfile": "^6.1.0",
+        "uuid": "^8.3.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged"
+        }
+    },
+    "devDependencies": {
+        "husky": "^6.0.0",
+        "prettier": "^2.2.1",
+        "pretty-quick": "^3.1.0"
+    }
 }
