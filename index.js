@@ -4,9 +4,7 @@ const debug = require("debug")("app");
 const { initConfiguration } = require("./config/init");
 const { setHardwareConfig, getHardwareConfig } = require("./firebase/init");
 const { updateBasicParameters } = require("./schedulers");
-
 const { rootListner } = require("./listners");
-
 const Drip = require("./controllers/drip");
 
 async function boot() {
